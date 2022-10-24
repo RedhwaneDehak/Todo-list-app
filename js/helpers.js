@@ -1,12 +1,8 @@
+/*global NodeList */
 (function (window) {
 	'use strict';
 
-	/**
-	 * Get element(s) by CSS selector.
-	 *
-	 * @param {string} [selector] the selector name
-	 * @param {dom element} [scope] the dom item to look into
-	 */
+	// Get element(s) by CSS selector:
 	window.qs = function (selector, scope) {
 		return (scope || document).querySelector(selector);
 	};
@@ -14,19 +10,13 @@
 		return (scope || document).querySelectorAll(selector);
 	};
 
-	/**
-	 * addEventListener wrapper.
-	 *
-	 */
+	// addEventListener wrapper:
 	window.$on = function (target, type, callback, useCapture) {
-		target.addEventListener(type, callback, useCapture);
+		target.addEventListener(type, callback, !!useCapture);
 	};
 
-	/**
-	 * Attach a handler to event for all elements that match the selector,
-	 * now or in the future, based on a root element
-	 *
-	 */
+	// Attach a handler to event for all elements that match the selector,
+	// now or in the future, based on a root element
 	window.$delegate = function (target, selector, type, handler) {
 		function dispatchEvent(event) {
 			var targetElement = event.target;
@@ -44,11 +34,8 @@
 		window.$on(target, type, dispatchEvent, useCapture);
 	};
 
-	/** 
-	 * Find the element's parent with the given tag name:
-	 * $parent(qs('a'), 'div');
-	 * 
-	 */ 
+	// Find the element's parent with the given tag name:
+	// $parent(qs('a'), 'div');
 	window.$parent = function (element, tagName) {
 		if (!element.parentNode) {
 			return;
@@ -59,11 +46,7 @@
 		return window.$parent(element.parentNode, tagName);
 	};
 
-	/**
-	 * Allow for looping on nodes by chaining:
-	 * qsa('.foo').forEach(function () {})
-	 * 
-	 */
-
+	// Allow for looping on nodes by chaining:
+	// qsa('.foo').forEach(function () {})
 	NodeList.prototype.forEach = Array.prototype.forEach;
 })(window);

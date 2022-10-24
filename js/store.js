@@ -81,7 +81,7 @@
 		callback = callback || function () {};
 
 		// Generate an ID
-		var newId = new Date().getTime();
+    var newId = Date.now();
 
 		// If an ID was actually given, find the item and update each property
 		if (id) {
@@ -117,11 +117,17 @@
 	Store.prototype.remove = function (id, callback) {
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
+		var todoId;
 		
 		for (var i = 0; i < todos.length; i++) {
-			if (todos[i].id === id) {
+			if (todos[i].id == id) {
+				todoId = todos[i].id;
+			}
+		}
+
+		for (var i = 0; i < todos.length; i++) {
+			if (todos[i].id == todoId) {
 				todos.splice(i, 1);
-				break;
 			}
 		}
 
